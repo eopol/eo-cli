@@ -1,5 +1,5 @@
 import importLocal from 'import-local'
-import { logger } from '@eo-cli-pro/utils'
+import { logger } from '@eo-cli/utils'
 import core from './lib'
 import pkg from '../package.json'
 

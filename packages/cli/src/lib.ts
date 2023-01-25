@@ -11,12 +11,12 @@ import {
   pathExistsSync,
   userHome,
   versionGreaterThanOrEqual,
-} from '@eo-cli-pro/utils'
-import { commandInitActionHandler } from '@eo-cli-pro/commands'
+} from '@eo-cli/utils'
+import { commandInitActionHandler } from '@eo-cli/commands'
 import {
   DEFAULT_ENV_CLI_HOME,
   LOWEST_NODE_VERSION as lowestVersion,
-} from '@eo-cli-pro/constants'
+} from '@eo-cli/constants'
 import pkg from '../package.json'
 
 // require: .js/.json/.node
