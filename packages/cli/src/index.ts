@@ -1,6 +1,6 @@
 import importLocal from 'import-local'
 import { logger } from '@eo-cli/utils'
-import core from './lib'
+import core from './core'
 import pkg from '../package.json'
 
 if (importLocal(import.meta.url)) {

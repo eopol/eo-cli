@@ -130,33 +130,31 @@ importers:
   packages/cli:
     specifiers:
       '@eo-cli/commands': workspace:*
+      '@eo-cli/exec': workspace:*
       '@eo-cli/utils': workspace:*
       '@types/import-local': ^3.1.0
-      '@types/minimist': 1.2.2
-      '@types/root-check': 1.0.0
-      '@types/user-home': 2.0.0
-      commander: 10.0.0
+      '@types/root-check': ^1.0.0
+      '@types/user-home': ^2.0.0
+      commander: ^10.0.0
       dayjs: ^1.11.7
-      dotenv: 16.0.3
+      dotenv: ^16.0.3
       import-local: ^3.1.0
-      minimist: 1.2.7
       npm-run-all: ^4.1.5
       rimraf: ^4.1.1
-      root-check: 2.0.0
+      root-check: ^2.0.0
       tsup: ^6.5.0
       typescript: ^4.9.4
     dependencies:
       '@eo-cli/commands': link:../commands
+      '@eo-cli/exec': link:../exec
       '@eo-cli/utils': link:../utils
       '@types/import-local': 3.1.0
-      '@types/minimist': 1.2.2
       '@types/root-check': 1.0.0
       '@types/user-home': 2.0.0
       commander: 10.0.0
       dayjs: 1.11.7
       dotenv: 16.0.3
       import-local: 3.1.0
-      minimist: 1.2.7
       root-check: 2.0.0
     devDependencies:
       npm-run-all: 4.1.5
@@ -1780,6 +1778,7 @@ packages:
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
+    dev: true
 
   /@types/node/12.20.55:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
@@ -5435,6 +5434,7 @@ packages:
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
+    dev: true
 
   /mixme/0.5.5:
     resolution: {integrity: sha512-/6IupbRx32s7jjEwHcycXikJwFD5UujbVNuJFkeKLYje+92OvtuPniF6JhnFm5JCTDUhS+kYK3W/4BWYQYXz7w==}

@@ -1,7 +1,7 @@
 {
-  "name": "@eo-cli/cli",
+  "name": "@eo-cli/exec",
   "version": "0.0.0",
-  "description": "🚀 The package offer cli for @eo-cli!",
+  "description": "🚀 The package offer exec for @eo-cli!",
   "type": "module",
   "keywords": [
     "cli",
@@ -11,7 +11,8 @@
     "turborepo",
     "changesets",
     "vite",
-    "vitest"
+    "vitest",
+    "exec"
   ],
   "homepage": "https://github.com/eopol/eo-cli/blob/master/packages/cli#readme",
   "bugs": {
@@ -30,9 +31,6 @@
     },
     "./*": "./*"
   },
-  "bin": {
-    "eo-cli": "./bin/index.js"
-  },
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "repository": {
@@ -50,17 +48,7 @@
     "clean:deps": "rimraf node_modules"
   },
   "dependencies": {
-    "@eo-cli/commands": "workspace:*",
-    "@eo-cli/exec": "workspace:*",
-    "@eo-cli/utils": "workspace:*",
-    "@types/import-local": "^3.1.0",
-    "@types/root-check": "^1.0.0",
-    "@types/user-home": "^2.0.0",
-    "commander": "^10.0.0",
-    "dayjs": "^1.11.7",
-    "dotenv": "^16.0.3",
-    "import-local": "^3.1.0",
-    "root-check": "^2.0.0"
+    "commander": "^10.0.0"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5",

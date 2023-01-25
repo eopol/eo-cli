@@ -122,6 +122,8 @@ function logCreator(param: {
       if (withPkgName) {
         if (pkgName) {
           _consola.withTag(`${pkgName}`)[_logType](_chalk(content))
+        } else {
+          consolaLogInvoker(_chalk(content))
         }
       } else {
         consolaLogInvoker(_chalk(content))
