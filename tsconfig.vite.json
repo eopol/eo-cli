@@ -1,0 +1,17 @@
+{
+  "extends": "@unconfig/ts-config/vite.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@eo-cli/*": ["packages/*/src"]
+    },
+    "composite": true
+  },
+  "include": [
+    "**/vite.config.*",
+    "packages/**/*",
+    "packages/**/*.json",
+    "packages/**/typings/**/*",
+    "typings/**/*"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "extends": "@unconfig/ts-config/node.esm.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@eo-cli/*": ["packages/*/src"]
+    },
+    "composite": true
+  },
+  "include": [
+    "**/build.config.ts",
+    "**/scripts/**/*",
+    "scripts/**/*",
+    "packages/**/*",
+    "packages/**/*.json",
+    "packages/**/typings/**/*",
+    "typings/**/*"
+  ],
+  "exclude": [
+    "**/__tests__/**",
+    "**/tests/**",
+    "node_modules",
+    "**/dist",
+    "**/*.md"
+  ]
+}

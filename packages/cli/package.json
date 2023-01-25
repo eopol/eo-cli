@@ -1,0 +1,76 @@
+{
+  "name": "@eo-cli/cli",
+  "version": "0.0.0",
+  "description": "🚀 The package offer cli for @eo-cli!",
+  "type": "module",
+  "keywords": [
+    "cli",
+    "eo-cli",
+    "monorepo",
+    "pnpm",
+    "turborepo",
+    "changesets",
+    "vite",
+    "vitest"
+  ],
+  "homepage": "https://github.com/eopol/eo-cli/blob/master/packages/cli#readme",
+  "bugs": {
+    "url": "https://github.com/eopol/eo-cli/issues"
+  },
+  "license": "MIT",
+  "author": "i7eo <admin@i7eo.com> (https://github.com/i7eo)",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "dev": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./*": "./*"
+  },
+  "bin": {
+    "eo-cli": "./bin/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eopol/eo-cli.git",
+    "directory": "packages/cli"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsup --config ./build.config.ts",
+    "lint": "run-s lint:**",
+    "lint:eslint": "TIMING=1 eslint \"*.{js,jsx,ts,tsx,md,json}\" --fix",
+    "lint:prettier": "prettier --write \"*.{js,ts,jsx,tsx,md,json}\"",
+    "clean": "run-p clean:**",
+    "clean:cache": "rimraf .turbo && rimraf dist",
+    "clean:deps": "rimraf node_modules"
+  },
+  "dependencies": {
+    "@eo-cli/commands": "workspace:*",
+    "@eo-cli/utils": "workspace:*",
+    "@types/import-local": "^3.1.0",
+    "@types/minimist": "1.2.2",
+    "@types/root-check": "1.0.0",
+    "@types/user-home": "2.0.0",
+    "commander": "10.0.0",
+    "dayjs": "^1.11.7",
+    "dotenv": "16.0.3",
+    "import-local": "^3.1.0",
+    "minimist": "1.2.7",
+    "root-check": "2.0.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^4.1.1",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=7"
+  }
+}

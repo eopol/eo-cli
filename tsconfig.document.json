@@ -1,0 +1,18 @@
+{
+  "extends": "@unconfig/ts-config/document.vitepress.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@eo-cli/*": ["packages/*/src"]
+    },
+    "composite": true
+  },
+  "include": [
+    "apps/document",
+    "apps/document/.vitepress",
+    "packages/**/*",
+    "packages/**/*.json",
+    "packages/**/typings/**/*",
+    "typings/**/*"
+  ]
+}

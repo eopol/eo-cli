@@ -1,0 +1,60 @@
+{
+  "name": "@eo-cli/constants",
+  "version": "0.0.0",
+  "description": "🚀 The package offer constants for @eo-cli!",
+  "type": "module",
+  "keywords": [
+    "cli",
+    "eo-cli",
+    "monorepo",
+    "pnpm",
+    "turborepo",
+    "changesets",
+    "vite",
+    "vitest",
+    "constants"
+  ],
+  "homepage": "https://github.com/eopol/eo-cli/blob/master/packages/constants#readme",
+  "bugs": {
+    "url": "https://github.com/eopol/eo-cli/issues"
+  },
+  "license": "MIT",
+  "author": "i7eo <admin@i7eo.com> (https://github.com/i7eo)",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "dev": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./*": "./*"
+  },
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eopol/eo-cli.git",
+    "directory": "packages/constants"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsup --config ./build.config.ts",
+    "lint": "run-s lint:**",
+    "lint:eslint": "TIMING=1 eslint \"*.{js,jsx,ts,tsx,md,json}\" --fix",
+    "lint:prettier": "prettier --write \"*.{js,ts,jsx,tsx,md,json}\"",
+    "clean": "run-p clean:**",
+    "clean:cache": "rimraf .turbo && rimraf dist",
+    "clean:deps": "rimraf node_modules"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^4.1.1",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=7"
+  }
+}
