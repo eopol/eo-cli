@@ -1,7 +1,7 @@
 {
   "name": "@eo-cli/cli",
   "version": "0.0.0",
-  "description": "🚀 The package offer cli for @eo-cli!",
+  "description": "🚀 The package offer cli core for @eo-cli!",
   "type": "module",
   "keywords": [
     "cli",
@@ -11,9 +11,11 @@
     "turborepo",
     "changesets",
     "vite",
-    "vitest"
+    "vitest",
+    "core",
+    "core cli"
   ],
-  "homepage": "https://github.com/eopol/eo-cli/blob/master/packages/cli#readme",
+  "homepage": "https://github.com/eopol/eo-cli/blob/master/packages/core/cli#readme",
   "bugs": {
     "url": "https://github.com/eopol/eo-cli/issues"
   },
@@ -38,7 +40,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/eopol/eo-cli.git",
-    "directory": "packages/cli"
+    "directory": "packages/core/cli"
   },
   "scripts": {
     "build": "rimraf dist && tsup --config ./build.config.ts",
@@ -50,8 +52,8 @@
     "clean:deps": "rimraf node_modules"
   },
   "dependencies": {
-    "@eo-cli/commands": "workspace:*",
     "@eo-cli/exec": "workspace:*",
+    "@eo-cli/init": "workspace:*",
     "@eo-cli/utils": "workspace:*",
     "@types/import-local": "^3.1.0",
     "@types/root-check": "^1.0.0",

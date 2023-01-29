@@ -1,6 +1,6 @@
 import { Command } from 'commander'
 import { logger, loggerOptionSetter } from '@eo-cli/utils'
-import { commandInitActionHandler } from '@eo-cli/commands'
+// import { commandInitActionHandler } from '@eo-cli/init'
 import exec from '@eo-cli/exec'
 import pkg from '../package.json'
 import perpare from './perpare'

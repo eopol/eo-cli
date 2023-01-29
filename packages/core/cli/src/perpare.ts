@@ -99,7 +99,10 @@ function checkEnv() {
   }
 
   createDefaultEnv()
-  logger.debug(`${pkg.name} 本地缓存地址：${process.env.CLI_HOME}`, pkg.name)
+  logger.debug(
+    `${pkg.name} 本地缓存地址：${process.env.CLI_HOME_PATH}`,
+    pkg.name
+  )
 }
 
 /**
@@ -110,13 +113,13 @@ function createDefaultEnv() {
     home: userHome,
   }
 
-  if (process.env.CLI_HOME) {
-    config['cliHome'] = join(userHome, process.env.CLI_HOME)
+  if (process.env.CLI_HOME_PATH) {
+    config['cliHome'] = join(userHome, process.env.CLI_HOME_PATH)
   } else {
     config['cliHome'] = join(userHome, DEFAULT_ENV_CLI_HOME)
   }
 
-  process.env.CLI_HOME = config.cliHome
+  process.env.CLI_HOME_PATH = config.cliHome
   return config
 }
 

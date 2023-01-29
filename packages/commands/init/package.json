@@ -1,7 +1,7 @@
 {
-  "name": "@eo-cli/utils",
+  "name": "@eo-cli/init",
   "version": "0.0.0",
-  "description": "🚀 The package offer utils for @eo-cli!",
+  "description": "🚀 The package offer init command for @eo-cli!",
   "type": "module",
   "keywords": [
     "cli",
@@ -12,9 +12,10 @@
     "changesets",
     "vite",
     "vitest",
-    "utils"
+    "commands",
+    "init command"
   ],
-  "homepage": "https://github.com/eopol/eo-cli/blob/master/packages/utils#readme",
+  "homepage": "https://github.com/eopol/eo-cli/blob/master/packages/commands/init#readme",
   "bugs": {
     "url": "https://github.com/eopol/eo-cli/issues"
   },
@@ -36,7 +37,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/eopol/eo-cli.git",
-    "directory": "packages/utils"
+    "directory": "packages/commands/init"
   },
   "scripts": {
     "build": "rimraf dist && tsup --config ./build.config.ts",
@@ -46,13 +47,6 @@
     "clean": "run-p clean:**",
     "clean:cache": "rimraf .turbo && rimraf dist",
     "clean:deps": "rimraf node_modules"
-  },
-  "dependencies": {
-    "@types/semver": "^7.3.13",
-    "chalk": "^5.2.0",
-    "consola": "^2.15.3",
-    "find-up": "^6.3.0",
-    "semver": "^7.3.8"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5",
