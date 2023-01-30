@@ -10,7 +10,8 @@
         "packages/models/*/src"
       ]
     },
-    "composite": true
+    "composite": true,
+    "noImplicitAny": false
   },
   "include": [
     "**/build.config.ts",

@@ -48,6 +48,7 @@
     "clean:deps": "rimraf node_modules"
   },
   "dependencies": {
+    "@eo-cli/constants": "workspace:*",
     "@types/semver": "^7.3.13",
     "chalk": "^5.2.0",
     "consola": "^2.15.3",

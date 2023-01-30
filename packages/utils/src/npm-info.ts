@@ -1,3 +1,4 @@
+import { NPM_MIRROR_URL, NPM_URL } from '@eo-cli/constants'
 import {
   versionGreaterThan,
   /*versionSatisfies,*/ versionSorted,
@@ -31,10 +32,8 @@ export async function getNpmInfo(name: string, registry?: string) {
  * @param isOrigin
  * @returns
  */
-function getNpmDefaultRegistry(isOrigin = false) {
-  return isOrigin
-    ? 'https://registry.npmjs.org'
-    : 'https://registry.npmmirror.com'
+export function getNpmDefaultRegistry(isOrigin = false) {
+  return isOrigin ? NPM_URL : NPM_MIRROR_URL
 }
 
 /**
@@ -87,6 +86,24 @@ export async function getNpmLatestVersion(
 ) {
   const versions = await getNpmInfoVersions(name, registry)
   const npmSatisfyVersions = getNpmSatisfyVersion(currentVersion, versions)
+  let latestVersion = ''
+
+  if (npmSatisfyVersions.length > 0) {
+    latestVersion = npmSatisfyVersions[0]
+  }
+
+  return latestVersion
+}
+
+/**
+ * @description 内部调用 npminstall 安装时传入的 version 为 latest，但是安装后有具体的版本号，所以这里要拿到安装后具体的版本号
+ */
+export async function getNpminstallPackageLatestVersion(
+  name: string,
+  registry?: string
+) {
+  const versions = await getNpmInfoVersions(name, registry)
+  const npmSatisfyVersions = versionSorted(versions)
   let latestVersion = ''
 
   if (npmSatisfyVersions.length > 0) {

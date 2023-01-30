@@ -9,7 +9,7 @@ import {
   versionGreaterThanOrEqual,
 } from '@eo-cli/utils'
 import {
-  DEFAULT_ENV_CLI_HOME,
+  DEFAULT_CLI_PACKAGE_HOME_PATH,
   LOWEST_NODE_VERSION as lowestVersion,
 } from '@eo-cli/constants'
 import pkg from '../package.json'
@@ -100,7 +100,7 @@ function checkEnv() {
 
   createDefaultEnv()
   logger.debug(
-    `${pkg.name} 本地缓存地址：${process.env.CLI_HOME_PATH}`,
+    `${pkg.name} 本地缓存地址：${process.env.CLI_PACKAGE_HOME_PATH}`,
     pkg.name
   )
 }
@@ -113,13 +113,13 @@ function createDefaultEnv() {
     home: userHome,
   }
 
-  if (process.env.CLI_HOME_PATH) {
-    config['cliHome'] = join(userHome, process.env.CLI_HOME_PATH)
+  if (process.env.CLI_PACKAGE_HOME_PATH) {
+    config['cliHome'] = join(userHome, process.env.CLI_PACKAGE_HOME_PATH)
   } else {
-    config['cliHome'] = join(userHome, DEFAULT_ENV_CLI_HOME)
+    config['cliHome'] = join(userHome, DEFAULT_CLI_PACKAGE_HOME_PATH)
   }
 
-  process.env.CLI_HOME_PATH = config.cliHome
+  process.env.CLI_PACKAGE_HOME_PATH = config.cliHome
   return config
 }
 

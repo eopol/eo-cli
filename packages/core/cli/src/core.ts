@@ -1,6 +1,6 @@
 import { Command } from 'commander'
 import { logger, loggerOptionSetter } from '@eo-cli/utils'
-// import { commandInitActionHandler } from '@eo-cli/init'
+// import commandInitActionHandler from '@eo-cli/init'
 import exec from '@eo-cli/exec'
 import pkg from '../package.json'
 import perpare from './perpare'
@@ -8,7 +8,7 @@ import perpare from './perpare'
 export interface ProgramOptions {
   [x: string]: any
   debug?: boolean
-  targetPath?: string
+  packagePath?: string
 }
 
 const program = new Command()
@@ -21,6 +21,10 @@ async function core(args: string[]) {
     registerCommand()
   } catch (error: any) {
     logger.error(error.message, pkg.name)
+
+    if (program.opts<ProgramOptions>().debug) {
+      console.log(error)
+    }
   }
 }
 
@@ -36,7 +40,7 @@ function registerCommand() {
     .version(version, '-v, --version', '查看版本号')
     .helpOption('-h, --help', '查看使用说明')
     .option('-d, --debug', '是否开启调试模式', false)
-    .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径', '')
+    .option('-pkg, --packagePath <packagePath>', '是否指定本地调试包路径', '')
 
   program
     .command('init [projectName]')
@@ -49,8 +53,8 @@ function registerCommand() {
     checkDebugArg(program.opts<ProgramOptions>().debug)
   })
 
-  program.on('option:targetPath', () => {
-    checkTargetPathArg(program.opts<ProgramOptions>().targetPath)
+  program.on('option:packagePath', () => {
+    checkPackagePathArg(program.opts<ProgramOptions>().packagePath)
   })
 
   // see https://github.com/tj/commander.js/issues/1609
@@ -80,11 +84,15 @@ function checkDebugArg(debug?: boolean) {
   })
 }
 
-function checkTargetPathArg(targetPath?: string) {
-  if (targetPath) {
-    process.env.CLI_TARGET_PATH = targetPath
+/**
+ * @description 开启本地调试动态安装包
+ * @param packagePath 指定的包路径
+ */
+function checkPackagePathArg(packagePath?: string) {
+  if (packagePath) {
+    process.env.CLI_PACKAGE_PATH = packagePath
   } else {
-    process.env.CLI_TARGET_PATH = ''
+    process.env.CLI_PACKAGE_PATH = ''
   }
 }
 

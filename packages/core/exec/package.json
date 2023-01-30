@@ -49,6 +49,7 @@
     "clean:deps": "rimraf node_modules"
   },
   "dependencies": {
+    "@eo-cli/constants": "workspace:*",
     "@eo-cli/package": "workspace:*",
     "@eo-cli/utils": "workspace:*"
   },
