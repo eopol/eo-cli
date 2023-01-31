@@ -5,10 +5,16 @@ import { DEFAULT_CLI_PACKAGE_DEPENDENCIES_DIR_NAME } from '@eo-cli/constants'
 import pkg from '../package.json'
 
 const COMMAND_PACKAGE_MAP: Record<string, string> = {
-  init: '@google-translate-select/constants', // 测试安装
-  // init: '@eo-cli/init',
+  // init: '@google-translate-select/constants', // 测试安装
+  init: '@eo-cli/init',
 }
 
+/**
+ * @description 动态执行命令
+ * 1. 如果命令行传入 packagePath 参数则通过动态加载本地文件的方式（getBootstrapFilePath）来执行本地的 package 函数
+ * 2. 如果没有传入 packagePath 则去根目录缓存文件中查找 package，如果有则更新，没有就安装
+ * @param args
+ */
 async function exec(...args: any[]) {
   let packagePath = process.env.CLI_PACKAGE_PATH ?? ''
   const packageHomePath = process.env.CLI_PACKAGE_HOME_PATH ?? ''
@@ -49,6 +55,7 @@ async function exec(...args: any[]) {
 
     if (await packageInstance.exists()) {
       // 更新 package
+      await packageInstance.update()
     } else {
       // 安装 package
       await packageInstance.install()
@@ -59,10 +66,11 @@ async function exec(...args: any[]) {
 
   const bootstrapFilePath = await packageInstance.getBootstrapFilePath()
   if (bootstrapFilePath) {
-    // TODO: node 多进程执行
     const pkgFileModule = await import(resolve(bootstrapFilePath))
+    // 在当前进程中调用
     // pkgFileModule.default(args) // args 此时是 arguments 类数组，而动态载入的包中需要参数列表，需要使用 apply 来对 arguments 做转换
     pkgFileModule.default.apply(null, args)
+    // TODO: 在 node 子进程调用
   }
 }
 
