@@ -29,7 +29,7 @@ import pkg from '../package.json'
 async function perpare() {
   try {
     checkPkgVersion()
-    checkNodeVersion()
+    // checkNodeVersion() // 移动至每个命令下执行
     checkRoot()
     checkUserHome()
     checkEnv()
