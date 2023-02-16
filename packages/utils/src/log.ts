@@ -11,10 +11,14 @@ enum LogLevel {
   Log = 2,
   Info = 3,
   Success = 3,
+  // Ready = 3,
+  // Start = 3,
   Debug = 4,
   Trace = 5,
-  Silent = -Infinity,
+  // Verbose = 5,
+  // Silent = -1,
   Verbose = Infinity,
+  Silent = -Infinity,
 }
 
 type LogInfoKey = Exclude<logType, 'silent' | 'verbose'>
@@ -136,10 +140,14 @@ function logCreator(param: {
 
 export function loggerOptionSetter(param: {
   instance: Consola
-  levelName: 'Info' | 'Verbose'
-}): void {
-  const { instance, levelName } = param
+  levelName?: 'Info' | 'Verbose'
+}): Consola {
+  const {
+    instance,
+    levelName = process.env.CLI_LOG_LEVEL as 'Info' | 'Verbose',
+  } = param
   instance.level = LogLevel[levelName]
+  return instance
 }
 
 export const logger = logCreator({

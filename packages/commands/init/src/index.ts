@@ -1,6 +1,11 @@
 import Command from '@eo-cli/command'
-import { logger } from '@eo-cli/utils'
+import { logger as loggerInstance, loggerOptionSetter } from '@eo-cli/utils'
 import pkg from '../package.json'
+
+// 使用 spawn 创建子进程后 logger level 丢失，需重新挂载
+const logger = loggerOptionSetter({
+  instance: loggerInstance,
+})
 
 /**
  * @description init 命令
@@ -15,10 +20,8 @@ export class InitCommand extends Command {
   init() {
     this.projectName = this.options[0] || ''
     this.force = !!this.options[1].force
-    console.log(this.projectName, this.force)
     logger.debug(`projectName: ${this.projectName}`, pkg.name)
     logger.debug(`force: ${this.force}`, pkg.name)
-    console.log(logger.debug(`force: ${this.force}`, pkg.name))
   }
 
   exec() {
