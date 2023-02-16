@@ -4,6 +4,7 @@ import Package from '@eo-cli/package'
 import { logger } from '@eo-cli/utils'
 import { DEFAULT_CLI_PACKAGE_DEPENDENCIES_DIR_NAME } from '@eo-cli/constants'
 import pkg from '../package.json'
+import type { SpawnOptions } from 'node:child_process'
 
 const COMMAND_PACKAGE_MAP: Record<string, string> = {
   // init: '@google-translate-select/constants', // 测试安装
@@ -94,29 +95,57 @@ async function exec(...args: any[]) {
       )
       _args[_args.length - 1] = _commandInstance
 
+      logger.debug(`${packageName} 子进程开始执行`, pkg.name)
       // 构造可执行的 eval 字符串
       const code = `(await import('${resolve(
         bootstrapFilePath
       )}')).default.call(null, ${JSON.stringify(_args)})`
       // 不设置 --input-type=module 会报错，eval 不支持 import/export，node 内部自动转化。see: http://nodejs.cn/api/cli.html#--input-typetype
-      const child = spawn('node', ['--input-type=module', '--eval', code], {
-        cwd: process.cwd(),
-        stdio: 'inherit',
-      })
+      const child = unifiedSpawn(
+        'node',
+        ['--input-type=module', '--eval', code],
+        {
+          cwd: process.cwd(),
+          stdio: 'inherit',
+        }
+      )
 
       child.on('error', (error: Error) => {
-        logger.error(`子进程执行出错 ${error.message}`, pkg.name)
+        logger.error(`${packageName} 子进程执行出错 ${error.message}`, pkg.name)
         process.exit(1) // 1 表示返回错误, 0 表示成功
       })
 
       child.on('exit', (e: number | null) => {
-        logger.debug(e === 0 ? '子进程正常结束' : '子进程异常结束', pkg.name) // e => 0
+        logger.debug(
+          e === 0
+            ? `${packageName} 子进程正常结束`
+            : `${packageName} 子进程异常结束`,
+          pkg.name
+        ) // e => 0
         e && process.exit(e)
       })
     } catch (error: any) {
       logger.error(error.message, pkg.name)
     }
   }
+}
+
+/**
+ * @description 重新包装 spawn，兼容 windows
+ * @param command
+ * @param args
+ * @param options
+ * @returns
+ */
+function unifiedSpawn(
+  command: string,
+  args: readonly string[],
+  options: SpawnOptions
+) {
+  const isWin = process.platform === 'win32'
+  const _command = isWin ? 'cmd' : command
+  const _args = isWin ? ['/c'].concat(command, args) : args
+  return spawn(_command, _args, options || {})
 }
 
 export default exec

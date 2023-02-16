@@ -20,8 +20,11 @@ export class InitCommand extends Command {
   init() {
     this.projectName = this.options[0] || ''
     this.force = !!this.options[1].force
-    logger.debug(`projectName: ${this.projectName}`, pkg.name)
-    logger.debug(`force: ${this.force}`, pkg.name)
+    logger.debug(
+      `${pkg.name} 执行参数 projectName 值为 ${this.projectName}`,
+      pkg.name
+    )
+    logger.debug(`${pkg.name} 执行参数 force 值为 ${this.force}`, pkg.name)
   }
 
   exec() {
