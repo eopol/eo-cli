@@ -1,6 +1,6 @@
 {
   "name": "@eo-cli/init",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "🚀 The package offer init command for @eo-cli!",
   "type": "module",
   "keywords": [

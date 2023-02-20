@@ -1,5 +1,14 @@
 # @eo-cli/utils
 
+## 0.1.1
+
+### Patch Changes
+
+- [`63610c4`](https://github.com/eopol/eo-cli/commit/63610c4d331b29d381734f488bbf129134eb8277) Thanks [@i7eo](https://github.com/i7eo)! - change npm register
+
+- Updated dependencies [[`63610c4`](https://github.com/eopol/eo-cli/commit/63610c4d331b29d381734f488bbf129134eb8277)]:
+  - @eo-cli/constants@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
