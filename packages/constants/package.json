@@ -20,6 +20,12 @@
   },
   "license": "MIT",
   "author": "i7eo <admin@i7eo.com> (https://github.com/i7eo)",
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "package.json",
+    "README.md"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "exports": {

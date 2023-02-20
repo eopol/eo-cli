@@ -35,7 +35,7 @@ export async function getNpmInfo(name: string, registry?: string) {
  * @param isOrigin
  * @returns
  */
-export function getNpmDefaultRegistry(isOrigin = false) {
+export function getNpmDefaultRegistry(isOrigin = true) {
   return isOrigin ? NPM_URL : NPM_MIRROR_URL
 }
 
