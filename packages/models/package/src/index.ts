@@ -7,10 +7,13 @@ import {
   pathExistsSync,
 } from '@eo-cli/utils'
 import npminstall from 'npminstall'
-import fse from 'fs-extra'
+import { mkdirp } from '@liuli-util/fs-extra'
+import pkg from '../package.json'
 
 /**
- * @description 动态安装 command package
+ * @description 动态安装 command package/template package
+ * 1. command package 如果传入 -pkg/--packagePath 则使用传入的路径下文件；没传入的话去 npm 下载后执行
+ * 2. template package 按照写死的数据（接口）去 npm 下载，下载完毕后 copy 到指定目录即可
  */
 class Package {
   constructor(
@@ -24,7 +27,7 @@ class Package {
     public packageHomeNodeModulesPath?: string
   ) {}
   /**
-   * @description 获取本地缓存文件 .store 下携带版本号的 package path
+   * @description 获取本地缓存文件 .store 下携带版本号的 package path，这里的 .store 目录是 npminstall 写死在代码里的
    * @param packageName
    * @param packageVersion
    * @returns
@@ -48,7 +51,7 @@ class Package {
       this.packageHomeNodeModulesPath &&
       !pathExistsSync(this.packageHomeNodeModulesPath)
     ) {
-      fse.mkdirp(this.packageHomeNodeModulesPath)
+      mkdirp(this.packageHomeNodeModulesPath)
     }
   }
   /**
@@ -71,9 +74,17 @@ class Package {
    */
   async getPackageLatestVersion() {
     if (this.packageVersion === 'latest') {
-      this.packageVersion = await getNpminstallPackageLatestVersion(
+      const packageVersion = await getNpminstallPackageLatestVersion(
         this.packageName
       )
+
+      if (packageVersion) {
+        this.packageVersion = packageVersion
+      } else {
+        throw new Error(
+          `[${pkg.name}: getNpminstallPackageLatestVersion] 获取最新版本号出错`
+        )
+      }
     }
   }
   /**
@@ -103,6 +114,12 @@ class Package {
     const latestPackageVersion = await getNpminstallPackageLatestVersion(
       this.packageName
     )
+    if (!latestPackageVersion) {
+      throw new Error(
+        `[${pkg.name}: getNpminstallPackageLatestVersion] 获取最新版本号出错`
+      )
+    }
+
     // 查询最新版本号对应的本地缓存包路径是否存在
     if (
       this.packageHomeNodeModulesPath &&
@@ -128,6 +145,8 @@ class Package {
           ],
         })
         // 安装成功后更新 package version
+        this.packageVersion = latestPackageVersion
+      } else {
         this.packageVersion = latestPackageVersion
       }
     }

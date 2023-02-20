@@ -3,11 +3,12 @@ import { logger, loggerOptionSetter } from '@eo-cli/utils'
 // import commandInitActionHandler from '@eo-cli/init'
 import exec from '@eo-cli/exec'
 import pkg from '../package.json'
-import perpare from './perpare'
+import prepare from './prepare'
 
 export interface ProgramOptions {
   [x: string]: any
   debug?: boolean
+  force?: boolean
   packagePath?: string
 }
 
@@ -17,12 +18,13 @@ async function core(args: string[]) {
   logger.debug(`${pkg.name} 命令行参数为：${args}`, pkg.name)
 
   try {
-    await perpare()
+    await prepare()
     registerCommand()
   } catch (error: any) {
     logger.error(error.message, pkg.name)
 
-    if (program.opts<ProgramOptions>().debug) {
+    // debug 模式下打印出调用栈方便排查问题
+    if (process.env.CLI_LOG_LEVEL === 'Verbose') {
       console.log(error)
     }
   }
@@ -65,6 +67,10 @@ function registerCommand() {
 
   // console.log(program)
   program.parse(process.argv)
+
+  // 环境变量初始化
+  checkDebugArg(program.opts<ProgramOptions>().debug)
+  checkPackagePathArg(program.opts<ProgramOptions>().packagePath)
 }
 
 /**

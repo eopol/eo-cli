@@ -1,10 +1,8 @@
 import { resolve } from 'node:path'
-import { spawn } from 'node:child_process'
 import Package from '@eo-cli/package'
-import { logger } from '@eo-cli/utils'
+import { logger, unifiedSpawn } from '@eo-cli/utils'
 import { DEFAULT_CLI_PACKAGE_DEPENDENCIES_DIR_NAME } from '@eo-cli/constants'
 import pkg from '../package.json'
-import type { SpawnOptions } from 'node:child_process'
 
 const COMMAND_PACKAGE_MAP: Record<string, string> = {
   // init: '@google-translate-select/constants', // 测试安装
@@ -15,23 +13,21 @@ const COMMAND_PACKAGE_MAP: Record<string, string> = {
  * @description 动态执行命令
  * 1. 如果命令行传入 packagePath 参数则通过动态加载本地文件的方式（getBootstrapFilePath）来执行本地的 package 函数
  * 2. 如果没有传入 packagePath 则去根目录缓存文件中查找 package，如果有则更新，没有就安装
+ * 3. 方便扩展，可以把不同命令交给不同团队做
  * @param args
  */
 async function exec(...args: any[]) {
   let packagePath = process.env.CLI_PACKAGE_PATH ?? ''
   const packageHomePath = process.env.CLI_PACKAGE_HOME_PATH ?? ''
   let packageHomeNodeModulesPath = ''
-  // const logLevel = process.env.CLI_LOG_LEVEL
   let packageInstance: Package | null = null
 
   logger.debug(`CLI_PACKAGE_PATH: ${packagePath}`, pkg.name)
   logger.debug(`CLI_PACKAGE_HOME_PATH: ${packageHomePath}`, pkg.name)
-  // logger.debug(`CLI_LOG_LEVEL: ${logLevel}`, pkg.name)
 
   const command = args[args.length - 1]
   const commandName: string = command.name()
   const packageName = COMMAND_PACKAGE_MAP[commandName]
-  // console.log(command.opts().force)
   const packageVersion = 'latest'
 
   if (!packagePath) {
@@ -39,7 +35,6 @@ async function exec(...args: any[]) {
       packageHomePath,
       DEFAULT_CLI_PACKAGE_DEPENDENCIES_DIR_NAME
     )
-
     packageHomeNodeModulesPath = resolve(packagePath, 'node_modules')
 
     logger.debug(`packagePath: ${packagePath}`, pkg.name)
@@ -128,24 +123,6 @@ async function exec(...args: any[]) {
       logger.error(error.message, pkg.name)
     }
   }
-}
-
-/**
- * @description 重新包装 spawn，兼容 windows
- * @param command
- * @param args
- * @param options
- * @returns
- */
-function unifiedSpawn(
-  command: string,
-  args: readonly string[],
-  options: SpawnOptions
-) {
-  const isWin = process.platform === 'win32'
-  const _command = isWin ? 'cmd' : command
-  const _args = isWin ? ['/c'].concat(command, args) : args
-  return spawn(_command, _args, options || {})
 }
 
 export default exec

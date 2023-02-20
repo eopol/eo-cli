@@ -3,6 +3,7 @@ import {
   versionGreaterThan,
   /*versionSatisfies,*/ versionSorted,
 } from './version'
+import pkg from '../package.json'
 
 /**
  * @description 获取 npm 包信息
@@ -22,8 +23,10 @@ export async function getNpmInfo(name: string, registry?: string) {
       data = await response.json()
     }
     return data
-  } catch (error) {
-    return Promise.reject(error)
+  } catch (error: any) {
+    return Promise.reject({
+      message: `[${pkg.name}: getNpmInfo] 获取包信息异常，报错信息：${error.message}`,
+    })
   }
 }
 

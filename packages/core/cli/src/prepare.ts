@@ -26,7 +26,7 @@ import pkg from '../package.json'
 /**
  * @description 脚手架启动阶段的准备工作
  */
-async function perpare() {
+async function prepare() {
   try {
     checkPkgVersion()
     // checkNodeVersion() // 移动至每个命令下执行
@@ -36,6 +36,7 @@ async function perpare() {
     await checkCliVersion()
   } catch (error: any) {
     logger.error(error.message, pkg.name)
+    process.exit(1)
   }
 }
 
@@ -146,4 +147,4 @@ async function checkCliVersion() {
   }
 }
 
-export default perpare
+export default prepare
