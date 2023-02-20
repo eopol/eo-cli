@@ -139,7 +139,7 @@ async function checkCliVersion() {
   // const currentName = '@google-translate-select/vue3'
 
   const latestVersion = await getNpmLatestVersion(currentVersion, currentName)
-  if (latestVersion) {
+  if (!versionGreaterThanOrEqual(currentVersion, latestVersion)) {
     logger.warn(
       `${pkg.name} 本地版本：${currentVersion}，最新版本：${latestVersion}，请手动更新！`,
       pkg.name
