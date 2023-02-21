@@ -11,6 +11,7 @@ export default defineConfig((options: Options) => ({
       composite: false,
     },
   },
+  shims: true,
   target: 'node18',
   banner: {
     // esbuild build commonjs package error. see https://github.com/evanw/esbuild/issues/1921

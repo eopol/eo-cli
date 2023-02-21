@@ -1,4 +1,5 @@
 import { resolve } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import Package from '@eo-cli/package'
 import { logger, unifiedSpawn } from '@eo-cli/utils'
 import { DEFAULT_CLI_PACKAGE_DEPENDENCIES_DIR_NAME } from '@eo-cli/constants'
@@ -92,8 +93,8 @@ async function exec(...args: any[]) {
 
       logger.debug(`${packageName} 子进程开始执行`, pkg.name)
       // 构造可执行的 eval 字符串
-      const code = `(await import('${resolve(
-        bootstrapFilePath
+      const code = `(await import('${pathToFileURL(
+        resolve(bootstrapFilePath)
       )}')).default.call(null, ${JSON.stringify(_args)})`
       // 不设置 --input-type=module 会报错，eval 不支持 import/export，node 内部自动转化。see: http://nodejs.cn/api/cli.html#--input-typetype
       const child = unifiedSpawn(

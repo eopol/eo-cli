@@ -1,4 +1,5 @@
 import { resolve } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import {
   formatPath,
   getNpmDefaultRegistry,
@@ -164,11 +165,14 @@ class Package {
       const dir = packageDirectorySync({ cwd: path })
 
       if (!dir) return null
-      const pkgFileModule = await import(resolve(dir, 'package.json'), {
-        assert: {
-          type: 'json',
-        },
-      })
+      const pkgFileModule = await import(
+        pathToFileURL(resolve(dir, 'package.json')) as any,
+        {
+          assert: {
+            type: 'json',
+          },
+        }
+      )
       const pkgFile = pkgFileModule.default
       if (pkgFile && pkgFile.module) {
         const path = resolve(dir, pkgFile.module)
