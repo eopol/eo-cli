@@ -30,7 +30,7 @@ import ejs from 'ejs'
 import pkg from '../package.json'
 import {
   CHOICES_LIST_ENUM,
-  PROJECT,
+  PROJECT_LIST,
   TEMPLATE_TYPE_ENUM,
   WHITE_PACKAGE_MANAGER,
 } from './constants'
@@ -109,7 +109,7 @@ export class InitCommand extends Command {
 
     // 目前不用 1.1/1.3/1.4 把信息存放在同级目录下的 constants 中，缺点就是每次发 template 都得发包
     // 数据放在 db 中只需要将模版发布至 npm 后更改 db 数据即可，通过接口就能获得最新数据
-    const projectTemplates = PROJECT.templates
+    const projectTemplates = PROJECT_LIST
     if (!projectTemplates || projectTemplates.length === 0) {
       throw new Error('项目模版不存在')
     }
@@ -199,7 +199,8 @@ export class InitCommand extends Command {
         // },
       ],
     })
-    logger.debug(`init 选择初始化类型为 ${CHOICES_LIST_ENUM[type]}`, pkg.name)
+
+    logger.debug(`init 选择初始化类型为 ${type}`, pkg.name)
 
     if (type === CHOICES_LIST_ENUM.project) {
       // 获取项目基本信息
@@ -320,13 +321,14 @@ export class InitCommand extends Command {
   hydrateEjsVariables(inquirerResult: Record<string, any>) {
     // AbcFed => abc-fed
     if (inquirerResult.projectName) {
-      inquirerResult.ejsProjectName = kebabCase(
-        inquirerResult.projectName
-      ).replace(/^-/, '')
+      inquirerResult.ejsName = kebabCase(inquirerResult.projectName).replace(
+        /^-/,
+        ''
+      )
     }
 
     if (inquirerResult.projectVersion) {
-      inquirerResult.ejsProjectVersion = inquirerResult.projectVersion
+      inquirerResult.ejsVersion = inquirerResult.projectVersion
     }
 
     return inquirerResult
@@ -556,8 +558,10 @@ export class InitCommand extends Command {
     }
   }
 
-  async ejsRender(ignore = ['node_modules']) {
+  async ejsRender() {
     const cwd = process.cwd()
+    const { ignore = ['**/node_modules/**'] } = this.selectTemplate
+
     try {
       const files = await fg('*', {
         cwd,
